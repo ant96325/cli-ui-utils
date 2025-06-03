@@ -12,6 +12,10 @@
       "require": "./dist/cjs/index.js"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ant96325/cli-ui-utils.git"
+  },
   "files": [
     "dist"
   ],
