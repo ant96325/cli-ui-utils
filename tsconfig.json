@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["node_modules", "dist", "test"]
+}

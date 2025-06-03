@@ -1,0 +1,48 @@
+{
+  "name": "cli-ui-utils",
+  "version": "0.1.4",
+  "description": "This is the cli UI utils such as Table, List, Quesion, etc.",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && npm run build:types && npm run build:rename",
+    "build:clean": "rm -rf dist",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:rename": "find ./dist/esm -name '*.js' -exec sh -c 'mv \"$1\" \"${1%.js}.mjs\"' _ {} \\;",
+    "prepublishOnly": "npm run build",
+    "test": "node test",
+    "test-ts": "ts-node test/ts-test.ts"
+  },
+  "keywords": [
+    "node",
+    "cli",
+    "utils"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cli-table": "^0.3.11",
+    "inquirer": "^9.2.15"
+  },
+  "devDependencies": {
+    "@types/cli-table": "^0.3.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^22.15.29",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
