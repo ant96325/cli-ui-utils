@@ -5,7 +5,7 @@ npm install cli-ui-utils
 
 ### For example
 
-#### *import* module
+#### 1. *import* module
 
 ```javascript
 import logger, { buildTable, buildInput, buildList } from "cli-ui-utils";
@@ -26,7 +26,7 @@ logger.info("test");
 ```
 
 
-#### *require* module
+#### 2. *require* module
 
 ```javascript
 const { buildTable, buildInput, buildList } = require("cli-ui-utils");
