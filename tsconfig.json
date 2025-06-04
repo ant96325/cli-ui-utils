@@ -10,7 +10,8 @@
     "allowJs": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "declaration": true
   },
   "exclude": ["node_modules", "dist", "test"]
 }
