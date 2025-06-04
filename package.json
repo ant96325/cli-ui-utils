@@ -2,6 +2,7 @@
   "name": "cli-ui-utils",
   "version": "0.1.4",
   "description": "This is the cli UI utils such as Table, List, Quesion, etc.",
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.mjs",
   "types": "./dist/types/index.d.ts",
@@ -40,7 +41,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "cli-table": "^0.3.11",
-    "inquirer": "^9.2.15"
+    "inquirer": "^8.2.6"
   },
   "devDependencies": {
     "@types/cli-table": "^0.3.4",

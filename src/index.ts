@@ -1,6 +1,22 @@
 import Table from "cli-table";
-import inquirer from "inquirer";
 import chalk from "chalk";
+
+// Add type for inquirer
+type Inquirer = {
+    prompt: typeof import('inquirer').default.prompt;
+};
+
+// Cache for inquirer instance
+let inquirerInstance: Inquirer | null = null;
+
+// Function to get inquirer instance
+async function getInquirer(): Promise<Inquirer> {
+    if (!inquirerInstance) {
+        const inq = await import('inquirer');
+        inquirerInstance = { prompt: inq.default.prompt };
+    }
+    return inquirerInstance;
+}
 
 type ListPrompt = {
     type: "list";
@@ -16,7 +32,8 @@ type InputPrompt = {
     validate?: (input: any) => boolean | string;
 };
 
-const buildList = (list: any[]): Promise<{ value: string }> => {
+const buildList = async (list: any[]): Promise<{ value: string }> => {
+    const inquirer = await getInquirer();
     const prompt: ListPrompt = {
         type: "list",
         name: "value",
@@ -65,7 +82,8 @@ interface InputType {
     type: "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select";
 }
 
-const buildInput = (message: string, type: InputType): Promise<{ value: string | number }> => {
+const buildInput = async (message: string, type: InputType): Promise<{ value: string | number }> => {
+    const inquirer = await getInquirer();
     const prompt: InputPrompt = {
         type: type.type === "number" ? "number" : "input",
         name: "value",
@@ -81,6 +99,7 @@ const buildInput = (message: string, type: InputType): Promise<{ value: string |
 }
 
 const yesNoQuesion = async(message: string) => {
+    const inquirer = await getInquirer();
     const answer = await inquirer.prompt({
         type: "list", 
         name: "answer",
