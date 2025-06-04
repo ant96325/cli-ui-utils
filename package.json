@@ -1,16 +1,16 @@
 {
   "name": "cli-ui-utils",
-  "version": "0.1.10",
-  "type": "module",
+  "version": "0.1.14",
   "description": "This is the cli UI utils such as Table, List, Quesion, etc.",
-  "main": "./dist/cjs/index.js",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "require": "./dist/cjs/index.cjs"
     }
   },
   "repository": {
@@ -21,9 +21,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run build:clean && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build": "npm run build:clean && npm run build:cjs && npm run build:rename-cjs && npm run build:esm && npm run build:types",
     "build:clean": "rm -rf dist",
     "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:rename-cjs": "find dist/cjs -name '*.js' -exec sh -c 'mv \"$1\" \"${1%.js}.cjs\"' _ {} \\;",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:types": "tsc -p tsconfig.types.json",
     "prepublishOnly": "npm run build",

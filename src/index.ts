@@ -25,21 +25,40 @@ type ListPrompt = {
     choices: any[];
 };
 
-type InputPrompt = {
-    type: "input" | "number" | "password";
+type CheckboxPrompt = {
+    type: "checkbox";
     name: "value";
     message: string;
+    choices: any[];
+};
+
+type InputPrompt = {
+    type: any;
+    name: "value";
+    message: string;
+    default?: any;
     validate?: (input: any) => boolean | string;
 };
 
-const buildList = async (list: any[]): Promise<{ value: string }> => {
+const buildList = async (choices: any[]): Promise<{ value: string }> => {
     const inquirer = await getInquirer();
     const prompt: ListPrompt = {
         type: "list",
         name: "value",
         message: chalk.yellow("Select the option:"),
-        choices: list,
+        choices: choices,
     };
+    return inquirer.prompt(prompt);
+}
+
+const buildCheckbox = async (message: string, choices: any[]): Promise<{ value: any[] }> => {
+    const inquirer = await getInquirer();
+    const prompt: CheckboxPrompt = {
+        type: "checkbox",
+        name: "value",
+        message: message,
+        choices: choices,
+    }
     return inquirer.prompt(prompt);
 }
 
@@ -79,14 +98,16 @@ const buildTable = (
 }
 
 interface InputType {
-    type: "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select";
+    type: "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime" | "time" | "filepath" | "editor" | "list" | "rawlist" | "expand" | "checkbox" | "password" | "input" | "number" | "text" | "password" | "list" | "checkbox" | "confirm" | "editor" | "expand" | "rawlist" | "search" | "select" | "date" | "datetime",
+    default?: any
 }
 
-const buildInput = async (message: string, type: InputType): Promise<{ value: string | number }> => {
+const buildInput = async (message: string, type: InputType): Promise<{ value: any }> => {
     const inquirer = await getInquirer();
     const prompt: InputPrompt = {
-        type: type.type === "number" ? "number" : "input",
+        type: type.type,
         name: "value",
+        default: type.default,
         message: chalk.yellow(message),
         validate: (data: any) => {
             if (data == undefined) {
@@ -101,13 +122,11 @@ const buildInput = async (message: string, type: InputType): Promise<{ value: st
 const yesNoQuesion = async(message: string) => {
     const inquirer = await getInquirer();
     const answer = await inquirer.prompt({
-        type: "list", 
-        name: "answer",
-        message: chalk.yellow(message),
-        choices: ["Yes", "No"],
+        type: "confirm", 
+        name: "value",
+        message: chalk.yellow(message),        
     });
-    if (answer.answer == "Yes") return true;
-    return false;
+    return answer.value;
 }
 
 class Logger {
@@ -136,36 +155,38 @@ class Logger {
     }
 }
 
-// Export all functions and types
-const exportedFunctions = {
-    buildList,
-    buildTable,
-    buildInput,
-    yesNoQuesion,
-    Logger
-};
-
 // Export types
 export type { InputType, ListPrompt, InputPrompt };
 
-// Export default logger instance
+// Create logger instance
 const logger = new Logger();
 
-// Export everything
+// Export everything as named exports
 export {
     buildList,
     buildTable,
     buildInput,
+    buildCheckbox,
     yesNoQuesion,
     Logger
 };
 
+// Export logger as default
 export default logger;
 
 // For CommonJS compatibility
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        ...exportedFunctions,
-        default: logger
-    };
+    // Export everything as named exports
+    Object.assign(module.exports, {
+        buildList,
+        buildTable,
+        buildInput,
+        buildCheckbox,
+        yesNoQuesion,
+        Logger,
+        logger
+    });
+    
+    // Also export default for ESM compatibility
+    module.exports.default = logger;
 }
