@@ -1,6 +1,13 @@
-`npm install cli-ui-utils`
+### Installation
+```bash
+npm install cli-ui-utils
+```
 
-*.ts or *.js (import module)
+### For example
+
+#### *import* module
+
+```javascript
 import logger, { buildTable, buildInput, buildList } from "cli-ui-utils";
 
 buildTable("test", ["name", "age", "city"], [
@@ -16,9 +23,12 @@ buildInput("test", { type: "input" });
 buildList(["test", "test2", "test3"]);
 
 logger.info("test");
+```
 
 
-*.js (require module)
+#### *require* module
+
+```javascript
 const { buildTable, buildInput, buildList } = require("cli-ui-utils");
 const logger = require("cli-ui-utils").default;
 
@@ -35,3 +45,4 @@ buildInput("test", { type: "input" });
 buildList(["test", "test2", "test3"]);
 
 logger.info("test");
+```
