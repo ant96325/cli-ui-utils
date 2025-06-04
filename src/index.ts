@@ -137,7 +137,7 @@ class Logger {
 }
 
 // Export all functions and types
-export {
+const exportedFunctions = {
     buildList,
     buildTable,
     buildInput,
@@ -150,4 +150,22 @@ export type { InputType, ListPrompt, InputPrompt };
 
 // Export default logger instance
 const logger = new Logger();
+
+// Export everything
+export {
+    buildList,
+    buildTable,
+    buildInput,
+    yesNoQuesion,
+    Logger
+};
+
 export default logger;
+
+// For CommonJS compatibility
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ...exportedFunctions,
+        default: logger
+    };
+}
