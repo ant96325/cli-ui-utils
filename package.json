@@ -1,6 +1,6 @@
 {
   "name": "cli-ui-utils",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "type": "module",
   "description": "This is the cli UI utils such as Table, List, Quesion, etc.",
   "main": "./dist/cjs/index.js",
