@@ -68,7 +68,7 @@ function _isAddress(value: string): boolean {
 
     // Solana address
     const base58Regex = /^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/;
-    if (base58Regex.test(value) && value.length === 44) return true;
+    if (base58Regex.test(value) && (value.length === 44 || value.length === 43)) return true;
 
     return false;
 }
